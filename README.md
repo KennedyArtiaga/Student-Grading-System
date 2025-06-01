@@ -50,7 +50,7 @@ A comprehensive web-based application for managing student grades and academic r
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/student-grade-system.git
+git clone https://github.com/KennedyArtiaga/Student-Grading-System.git
 cd student-grade-system
 ```
 
@@ -73,7 +73,7 @@ node server.js
    DB_HOST=localhost
    DB_USER=your_mysql_username
    DB_PASSWORD=your_mysql_password
-   DB_NAME=sgs_db
+   DB_NAME=student_grading_system
    JWT_SECRET=your_jwt_secret
    ```
 
@@ -116,6 +116,58 @@ student grading system/
 └── database/
     └── schema.sql
 ```
+
+## Database Structure
+
+### Database Name
+The database should be named `student_grading_system` (Student Grading System Database)
+
+### Tables Structure
+
+1. **users**
+   - `id` (INT, Primary Key)
+   - `username` (VARCHAR)
+   - `password` (VARCHAR, hashed)
+   - `role` (ENUM: 'admin', 'teacher', 'student')
+   - `created_at` (TIMESTAMP)
+   - `updated_at` (TIMESTAMP)
+
+2. **students**
+   - `id` (INT, Primary Key)
+   - `student_id` (VARCHAR, Unique, Format: YYCOURSE-XXXX)
+   - `first_name` (VARCHAR)
+   - `last_name` (VARCHAR)
+   - `email` (VARCHAR)
+   - `course` (VARCHAR)
+   - `section` (VARCHAR)
+   - `created_at` (TIMESTAMP)
+   - `updated_at` (TIMESTAMP)
+
+3. **subjects**
+   - `id` (INT, Primary Key)
+   - `subject_code` (VARCHAR)
+   - `subject_name` (VARCHAR)
+   - `units` (INT)
+   - `created_at` (TIMESTAMP)
+   - `updated_at` (TIMESTAMP)
+
+4. **grades**
+   - `id` (INT, Primary Key)
+   - `student_id` (INT, Foreign Key)
+   - `subject_id` (INT, Foreign Key)
+   - `midterm_grade` (DECIMAL)
+   - `final_grade` (DECIMAL)
+   - `semester` (VARCHAR)
+   - `school_year` (VARCHAR)
+   - `created_at` (TIMESTAMP)
+   - `updated_at` (TIMESTAMP)
+
+### Naming Conventions
+- All table names are in lowercase and plural form
+- Primary keys are named `id`
+- Foreign keys are named `table_name_id`
+- Timestamps are named `created_at` and `updated_at`
+- All column names are in snake_case
 
 ## Current Implementation Status
 
