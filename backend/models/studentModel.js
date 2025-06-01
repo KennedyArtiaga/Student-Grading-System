@@ -25,10 +25,28 @@ exports.getAll = async () => {
 };
 
 exports.update = async (id, student_id, name, course, year, section) => {
+  // Get the current student record
+  const [currentStudent] = await db.query('SELECT * FROM students WHERE id = ?', [id]);
+  
+  // If course has changed, generate new student ID
+  let newStudentId = student_id;
+  if (currentStudent[0].course !== course) {
+    newStudentId = await this.getNextStudentId(course);
+  }
+
+  // First update the student record
   await db.query(
     'UPDATE students SET student_id = ?, name = ?, course = ?, year = ?, section = ? WHERE id = ?',
-    [student_id, name, course, year, section, id]
+    [newStudentId, name, course, year, section, id]
   );
+
+  // Then update the grades if the student ID changed
+  if (currentStudent[0].student_id !== newStudentId) {
+    await db.query(
+      'UPDATE grades SET student_id = ? WHERE student_id = ?',
+      [newStudentId, currentStudent[0].student_id]
+    );
+  }
 };
 
 exports.delete = async (id) => {

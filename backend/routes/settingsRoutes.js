@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const router = express.Router();
 
-const SETTINGS_PATH = path.join(__dirname, '../settings.json');
+const SETTINGS_PATH = path.join(__dirname, '../config/settings.json');
 
 // GET current S.Y.
 router.get('/api/settings/sy', (req, res) => {

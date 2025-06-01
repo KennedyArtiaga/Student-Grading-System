@@ -81,15 +81,21 @@ const StudentAccounts = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/students/${editId}`, {
-        student_id: students.find(s => s.id === editId).student_id,
+      const currentStudent = students.find(s => s.id === editId);
+      
+      // If course has changed, we need to update the student ID
+      const updatedData = {
+        student_id: currentStudent.student_id,
         name: editName,
         course: editCourse,
         year: editYear,
         section: editSection
-      }, {
+      };
+
+      await axios.put(`http://localhost:5000/api/students/${editId}`, updatedData, {
         headers: { Authorization: `Bearer ${token}` }
       });
+
       setEditId(null);
       setEditName('');
       setEditCourse('');
