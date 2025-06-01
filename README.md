@@ -51,7 +51,7 @@ A comprehensive web-based application for managing student grades and academic r
 1. Clone the repository
 ```bash
 git clone https://github.com/KennedyArtiaga/Student-Grading-System.git
-cd student-grade-system
+cd Student-Grading-System
 ```
 
 2. Install frontend dependencies
